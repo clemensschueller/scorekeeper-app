@@ -12,8 +12,11 @@ export default function Player({ name, score, onMinus, onPlus }) {
   return (
     <section className="Player">
       {name}
-      <button onClick={onMinus}>-</button>
-      {score} <button onClick={onPlus}>+</button>
+      <div className="Player__buttons">
+        <button onClick={onMinus}>-</button>
+        <output className="Player__score">{score}</output>
+        <button onClick={onPlus}>+</button>
+      </div>
     </section>
   )
 }

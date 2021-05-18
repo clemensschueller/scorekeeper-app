@@ -1,7 +1,7 @@
 .Button {
-  padding: 16px;
+  padding: 10px;
   border: none;
-  background: darksalmon;
+  background: rgb(221, 75, 27);
   border-radius: 8px;
 }
 

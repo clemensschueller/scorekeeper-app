@@ -12,19 +12,26 @@ function App() {
 
   return (
     <div className="App">
-      {players.map((player, index) => (
-        <Player
-          onMinus={() => handleMinus(index)}
-          onPlus={() => handlePlus(index)}
-          key={player.name}
-          name={player.name}
-          score={player.score}
-        />
-      ))}
-
-      <Button onClick={resetScore}>Reset Score</Button>
-      <Button onClick={resetAll}>Reset All</Button>
       <PlayerForm onSubmit={createPlayer} />
+
+      <ul className="App__player-list">
+        {players.map((player, index) => (
+          <li>
+            <Player
+              onMinus={() => updateScore(index, -1)}
+              onPlus={() => updateScore(index, 1)}
+              key={player.name}
+              name={player.name}
+              score={player.score}
+            />
+          </li>
+        ))}
+      </ul>
+
+      <div className="App__buttons">
+        <Button onClick={resetScores}>Reset scores</Button>
+        <Button onClick={resetAll}>Reset all</Button>
+      </div>
     </div>
   )
 
@@ -32,24 +39,15 @@ function App() {
     setPlayers([])
   }
 
-  function resetScore() {
+  function resetScores() {
     setPlayers(players.map(player => ({ ...player, score: 0 })))
   }
 
-  function handleMinus(index) {
+  function updateScore(index, value) {
     const playerToUpdate = players[index]
-    setPlayers([
+    setPlayers(players => [
       ...players.slice(0, index),
-      { ...playerToUpdate, score: playerToUpdate.score - 1 },
-      ...players.slice(index + 1),
-    ])
-  }
-
-  function handlePlus(index) {
-    const playerToUpdate = players[index]
-    setPlayers([
-      ...players.slice(0, index),
-      { ...playerToUpdate, score: playerToUpdate.score + 1 },
+      { ...playerToUpdate, score: playerToUpdate.score + value },
       ...players.slice(index + 1),
     ])
   }
