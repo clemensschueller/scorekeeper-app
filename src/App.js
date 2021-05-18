@@ -1,13 +1,62 @@
 import Button from './Button'
 import PlayerForm from './PlayerForm'
-import PlayerScore from './PlayerScore'
+import Player from './Player'
+import { useState } from 'react'
+import './App.css'
 
 function App() {
+  const [players, setPlayers] = useState([
+    { name: 'John Doe', score: 20 },
+    { name: 'Jane Doe', score: 120 },
+  ])
+
   return (
     <div className="App">
-      <Button isActive={'moin'}>Moin</Button>
+      {players.map((player, index) => (
+        <Player
+          onMinus={() => handleMinus(index)}
+          onPlus={() => handlePlus(index)}
+          key={player.name}
+          name={player.name}
+          score={player.score}
+        />
+      ))}
+
+      <Button onClick={resetScore}>Reset Score</Button>
+      <Button onClick={resetAll}>Reset All</Button>
+      <PlayerForm onSubmit={createPlayer} />
     </div>
   )
+
+  function resetAll() {
+    setPlayers([])
+  }
+
+  function resetScore() {
+    setPlayers(players.map(player => ({ ...player, score: 0 })))
+  }
+
+  function handleMinus(index) {
+    const playerToUpdate = players[index]
+    setPlayers([
+      ...players.slice(0, index),
+      { ...playerToUpdate, score: playerToUpdate.score - 1 },
+      ...players.slice(index + 1),
+    ])
+  }
+
+  function handlePlus(index) {
+    const playerToUpdate = players[index]
+    setPlayers([
+      ...players.slice(0, index),
+      { ...playerToUpdate, score: playerToUpdate.score + 1 },
+      ...players.slice(index + 1),
+    ])
+  }
+
+  function createPlayer(name) {
+    setPlayers([...players, { name, score: 0 }])
+  }
 }
 
 export default App
