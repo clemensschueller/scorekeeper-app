@@ -1,21 +1,22 @@
 import styled from 'styled-components/macro'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
-// Button.propTypes = {
-//   isActive: PropTypes.bool,
-//   onClick: PropTypes.func,
-//   children: PropTypes.node,
-// }
+Button.propTypes = {
+  isActive: PropTypes.bool,
+  onClick: PropTypes.func,
+  children: PropTypes.node,
+}
 
-// export default function Button({ children, isActive, onClick }) {
-//   return (
+export default function Button(props) {
+  return <ButtonStyled {...props} />
+}
 //     <button onClick={onClick} className={isActive ? 'Button active' : 'Button'}>
 //       {children}
 //     </button>
 //   )
 // }
 
-const Button = styled.button`
+const ButtonStyled = styled.button`
   padding: 10px;
   border: none;
   background: ${props => (props.isActive ? 'darksalmon' : 'grey')};
@@ -27,4 +28,3 @@ const Button = styled.button`
     border-color: red;
   }
 `
-export default Button
